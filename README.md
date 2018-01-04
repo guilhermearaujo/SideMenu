@@ -13,7 +13,7 @@
 > * Building and maintaining this **free** library takes a lot of my time and **saves you time**. Please consider paying it forward by supporting me with a small amount to my [PayPal](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=contact%40jonkent%2eme&lc=US&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted). ($0 in support since inception 😕)
 
 * **[Overview](#overview)**
-  * [Preview Samples](#preview-samples) 
+  * [Preview Samples](#preview-samples)
 * **[Requirements](#requirements)**
 * **[Installation](#installation)**
   * [CocoaPods](#cocoapods)
@@ -119,7 +119,7 @@ In your view controller's `viewDidLoad` event, do something like this (**IMPORTA
 ``` swift
 // Define the menus
 let menuLeftNavigationController = UISideMenuNavigationController(rootViewController: YourViewController)
-// UISideMenuNavigationController is a subclass of UINavigationController, so do any additional configuration 
+// UISideMenuNavigationController is a subclass of UINavigationController, so do any additional configuration
 // of it here like setting its viewControllers. If you're using storyboards, you'll want to do something like:
 // let menuLeftNavigationController = storyboard!.instantiateViewController(withIdentifier: "LeftMenuNavigationController") as! UISideMenuNavigationController
 SideMenuManager.default.menuLeftNavigationController = menuLeftNavigationController
@@ -235,7 +235,7 @@ open var menuAnimationUsingSpringWithDamping: CGFloat = 1
 /// The animation initial spring velocity when a menu is displayed. Ignored when displayed with a gesture.
 open var menuAnimationInitialSpringVelocity: CGFloat = 1
 
-/** 
+/**
 Automatically dismisses the menu when another view is pushed from it.
 
 Note: to prevent the menu from dismissing when presenting, set modalPresentationStyle = .overFullScreen
@@ -312,6 +312,11 @@ extension MyViewController: UISideMenuNavigationControllerDelegate {
 
     func sideMenuDidDisappear(menu: UISideMenuNavigationController, animated: Bool) {
         print("SideMenu Disappeared! (animated: \(animated))")
+    }
+
+    func sideMenuCustomNavigationControllerToPush(menu: UISideMenuNavigationController) -> UINavigationController? {
+      print("Providing a custom Navigation Controller to push view controllers")
+      return myCustomNavigationController
     }
 
 }
