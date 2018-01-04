@@ -8,6 +8,7 @@
 import UIKit
 
 @objc public protocol UISideMenuNavigationControllerDelegate {
+    @objc optional func sideMenuCustomNavigationControllerToPush(menu: UISideMenuNavigationController) -> UINavigationController?
     @objc optional func sideMenuWillAppear(menu: UISideMenuNavigationController, animated: Bool)
     @objc optional func sideMenuDidAppear(menu: UISideMenuNavigationController, animated: Bool)
     @objc optional func sideMenuWillDisappear(menu: UISideMenuNavigationController, animated: Bool)
@@ -257,7 +258,8 @@ open class UISideMenuNavigationController: UINavigationController {
 
         let splitViewController = presentingViewController as? UISplitViewController
         let tabBarController = presentingViewController as? UITabBarController
-        let potentialNavigationController = (splitViewController?.viewControllers.first ?? tabBarController?.selectedViewController) ?? presentingViewController
+        let customNavigationController = self.activeDelegate?.sideMenuCustomNavigationControllerToPush?(menu: self)
+        let potentialNavigationController = (splitViewController?.viewControllers.first ?? tabBarController?.selectedViewController) ?? customNavigationController ?? presentingViewController
         guard let navigationController = potentialNavigationController as? UINavigationController else {
             print("SideMenu Warning: attempt to push a View Controller from \(String(describing: potentialNavigationController.self)) where its navigationController == nil. It must be embedded in a Navigation Controller for this to work.")
             return
